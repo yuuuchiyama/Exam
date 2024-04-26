@@ -20,6 +20,7 @@ public class StudentDao extends Dao {
 	// フィールド変数
 	private String baseSql = "select * from student where school_cd = ?"; // 各メソッドで使用するSQLを用意
 
+	// 1つのデータの取得は下のフィルターメソッドと違いbennの値をリストに格納する必要はない
 	/** 学生番号を指定して学生インスタンスを1件取得するメソッド */
 	public Student get(String no) throws Exception {
 		Student student = new Student();			// 学生インスタンスを初期化
@@ -77,6 +78,7 @@ public class StudentDao extends Dao {
 		return student;
 	}
 
+	// 複数のデータを取得する場合はStudentsインスタンスを作製してbeenに値を格納してリストに追加する(88行目)
 	/** フィルター後のリストへの格納処理をするメソッド */
 	private List<Student> postFilter(ResultSet rSet, School school) throws Exception {
 		List<Student> list = new ArrayList<>();	// リストを初期化

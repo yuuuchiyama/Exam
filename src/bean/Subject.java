@@ -21,8 +21,10 @@ public class Subject implements Serializable {
 	public School getSchool() {
 		return school;
 	}
-	public void getSchool(School school) {
+	public void setSchool(School school) {
 		this.school = school;
 	}
+
+
 
 }
