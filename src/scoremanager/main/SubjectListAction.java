@@ -1,52 +1,30 @@
 package scoremanager.main;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.sun.corba.se.spi.orbutil.fsm.Action;
-
-import bean.School;
+import bean.Teacher;
 import dao.SubjectDao;
+import tool.Action;
 
 // カスタムインタフェースまたはフレームワークのActionクラスを継承することが一般的です。
-public abstract class SubjectListAction implements Action {
+public class SubjectListAction extends Action {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		HttpSession session = req.getSession(); // セッション情報を取得
+		Teacher teacher = (Teacher)session.getAttribute("user");
 
-    private SubjectDao subjectDao;
-
-    // コンストラクタでDAOのインスタンスを受け取る
-    public SubjectListAction(SubjectDao subjectDao) {
-        this.subjectDao = subjectDao;
-    }
-
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        try {
-            // パラメータから学校IDを取得
-            String schoolId = request.getParameter("schoolId");
-            if (schoolId == null) {
-                // エラー処理：schoolIdが必要
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "School ID is required.");
-                return;
-            }
-
-            School school = new School();
-            school.setCd(schoolId); // 学校IDを設定
+			SubjectDao subjectDao = new SubjectDao();
 
             // 学校に関連する科目リストを取得
-            List<Subject> subjects = subjectDao.filter(school);
+            List<bean.Subject> subjects = subjectDao.filter(teacher.getSchool());
 
             // 科目リストをリクエスト属性にセット
-            request.setAttribute("subjects", subjects);
+            req.setAttribute("subjects", subjects);
 
             // 科目リストを表示するJSPにフォワード
-            request.getRequestDispatcher("subject_list.jsp").forward(request, response);
-        } catch (Exception e) {
-            // 例外のロギングとエラーレスポンスの送信
-            e.printStackTrace(); // 本番環境ではより適切なロギングが推奨されます。
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An internal error occurred.");
+            req.getRequestDispatcher("subject_list.jsp").forward(req, res);
         }
-    }
 }
