@@ -5,9 +5,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import bean.Student;
-import dao.StudentDao;
+import bean.Subject;
+import bean.Teacher;
+import dao.SubjectDao;
 import tool.Action;
 
 public class SubjectCreateExecuteAction extends Action {
@@ -15,10 +17,12 @@ public class SubjectCreateExecuteAction extends Action {
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// TODO 自動生成されたメソッド・スタブ
+		HttpSession session = req.getSession();		// セッションを取得
+		Teacher teacher = (Teacher)session.getAttribute("user");
 
-		Student subject = new Student();
+		Subject subject = new Subject();
 
-		StudentDao sDao = new StudentDao();
+		SubjectDao sDao = new SubjectDao();
 
 		Map<String, String> errors = new HashMap<>();	// エラーメッセージ
 
@@ -33,13 +37,13 @@ public class SubjectCreateExecuteAction extends Action {
 			errors.put("cd_error", "科目コードは3文字で入力してください");
 			req.setAttribute("errors", errors);
 		}else {
-			if (sDao.get(cd) != null) {
+			if (sDao.get(cd, teacher.getSchool()) != null) {
 				errors.put("no_error", "科目コードが重複しています");
 				req.setAttribute("errors", errors);
 			}else {
 				// beenに値をセット
 				subject.setName(name);
-				subject.setNo(cd);
+				subject.setCd(cd);
 
 
 				//DBへデータ保存 5
