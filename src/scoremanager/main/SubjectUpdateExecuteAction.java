@@ -33,15 +33,15 @@ public class SubjectUpdateExecuteAction extends Action {
 		cd = req.getParameter("cd");
 		name = req.getParameter("name");
 
+		subject.setCd(cd);
+		subject.setName(name);
+		subject.setSchool(teacher.getSchool());
+
 		//DBへデータ保存 5
 		sDao.save(subject);	// sqlを実行
 
 		url = "subject_update_done.jsp";
 		req.getRequestDispatcher(url).forward(req, res);
-
-		url = "SubjectUpdate.action";
-		req.getRequestDispatcher(url).forward(req, res);
-
 	}
 
 }
