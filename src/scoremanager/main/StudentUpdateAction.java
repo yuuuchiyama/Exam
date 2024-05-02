@@ -12,42 +12,33 @@ import dao.ClassNumDao;
 import dao.StudentDao;
 import tool.Action;
 
-public class StudentUpdateAction extends Action {
+public class StudentUpdateAction extends Action{
 
 	@Override
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		//ローカル変数の宣言
-		HttpSession session = req.getSession(); // セッション情報を取得
+	public void execute(HttpServletRequest req, HttpServletResponse res)
+			throws Exception {
+		HttpSession session = req.getSession();//セッション
 		Teacher teacher = (Teacher)session.getAttribute("user");
 
-		StudentDao sDao = new StudentDao();
-		ClassNumDao cDao = new ClassNumDao();
+		String no = req.getParameter("no");
 
-		String no = "";
-		Student student = null;
+		StudentDao p=new StudentDao();
+		Student a = p.get(no);
 
+		ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
+		List<String> list = cNumDao.filter(teacher.getSchool());
 
-		//リクエストパラメーターの取得
-		no = req.getParameter("no");	// student_list.jspのaタグから受け取った値
+		// リクエストにデータをセット
+		req.setAttribute("ent_year", a.getEntYear());
+		req.setAttribute("no", a.getNo());
+		req.setAttribute("name", a.getName());
+		req.setAttribute("num", list);
+		req.setAttribute("fnum", a.getClassNum());
 
-		//DBからデータの取得
-		student = sDao.get(no);										// 学生の詳細データを取得
-		List<String> list = cDao.filter(teacher.getSchool());	//クラスの一覧を取得
+		//JSPへフォワード 7
+		req.getRequestDispatcher("student_update.jsp").forward(req, res);
 
-		//ビジネスロジック
-
-
-		//DBへの保存
-
-		//レスポンス値をセット
-		req.setAttribute("ent_year", student.getEntYear());
-		req.setAttribute("no", student.getNo());
-		req.setAttribute("name", student.getName());
-		req.setAttribute("class_num", student.getClassNum());
-		req.setAttribute("class_num_set", list);
-
-		//フォワード
-		req.getRequestDispatcher("student_update.jsp").forward(req, res); // 学生一覧まで画面遷移
 	}
+
 
 }
