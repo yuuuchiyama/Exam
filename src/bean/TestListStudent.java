@@ -7,16 +7,17 @@ public class TestListStudent implements Serializable {
 	private String subjectCd;
 	private int num;
 	private int point;
+
 	public String getSubjectName() {
 		return subjectName;
 	}
-	public void setSubjectName(String SubjectName) {
+	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
 	public String getSubjectCd() {
 		return subjectCd;
 	}
-	public void setSubject(String SubjectCd) {
+	public void setSubject(String subjectCd) {
 		this.subjectCd = subjectCd;
 	}
 	public int getNum() {
@@ -31,5 +32,4 @@ public class TestListStudent implements Serializable {
 	public void setPoint(int point) {
 		this.point = point;
 	}
-
 }

@@ -16,15 +16,15 @@ public class SubjectListAction extends Action {
 		HttpSession session = req.getSession(); // セッション情報を取得
 		Teacher teacher = (Teacher)session.getAttribute("user");
 
-			SubjectDao subjectDao = new SubjectDao();
+		SubjectDao subjectDao = new SubjectDao();
 
-            // 学校に関連する科目リストを取得
-            List<bean.Subject> subjects = subjectDao.filter(teacher.getSchool());
+        // 学校に関連する科目リストを取得
+        List<bean.Subject> subjects = subjectDao.filter(teacher.getSchool());
 
-            // 科目リストをリクエスト属性にセット
-            req.setAttribute("subjects", subjects);
+        // 科目リストをリクエスト属性にセット
+        req.setAttribute("subjects", subjects);
 
-            // 科目リストを表示するJSPにフォワード
-            req.getRequestDispatcher("subject_list.jsp").forward(req, res);
+        // 科目リストを表示するJSPにフォワード
+        req.getRequestDispatcher("subject_list.jsp").forward(req, res);
         }
 }

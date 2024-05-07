@@ -30,7 +30,7 @@ public class SubjectCreateExecuteAction extends Action {
 		String cd = "";
 		String name = "";
 
-		cd = req.getParameter("cd");
+		cd = req.getParameter("code");
 		name = req.getParameter("name");
 
 		if (cd.length() != 3) {
@@ -42,6 +42,7 @@ public class SubjectCreateExecuteAction extends Action {
 				req.setAttribute("errors", errors);
 			}else {
 				// beenに値をセット
+				subject.setSchool(teacher.getSchool());
 				subject.setName(name);
 				subject.setCd(cd);
 

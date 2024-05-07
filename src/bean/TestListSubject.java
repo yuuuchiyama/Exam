@@ -40,10 +40,16 @@ public class TestListSubject implements Serializable {
 	}
 	public void setPoints(Map<Integer,Integer> points) {
 		this.points = points;
-	}public String getPoint(int key) {
+	}
+	public String getPoint(int key) {
 		return null;
 	}
 	public void putPoint(int key,int value) {
+		points = getPoint();
+
+		points.put(key, value);
+
+		setPoints(points);
 	}
 
 

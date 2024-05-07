@@ -27,7 +27,7 @@
                         <th>科目コード</th>
                         <th>科目名</th>
                         <!-- 変更と削除のヘッダー -->
-                        <c:if test="${not empty newSubject}">
+                        <c:if test="${not empty subjects}">
                             <th>変更</th>
                             <th>削除</th>
                         </c:if>
@@ -35,15 +35,17 @@
                 </thead>
                 <tbody>
                     <!-- 新規登録した科目 -->
-                    <c:if test="${not empty newSubject}">
-                        <tr>
-                            <td>${newSubject.code}</td>
-                            <td>${newSubject.name}</td>
-                            <!-- 変更と削除のリンク -->
-                            <td><a href="#">変更</a></td>
-                            <td><a href="#">削除</a></td>
-                        </tr>
-                    </c:if>
+                    <tr>
+                    	<c:if test="${not empty subjects}">
+	                    <c:forEach var="subject" items="${subjects}">
+	                    <td>${subjects.cd}</td>
+	                    <td>${subjects.name}</td>
+	                    <!-- 変更と削除のリンク -->
+	                    <td><a href="#">変更</a></td>
+	                    <td><a href="#">削除</a></td>
+	                    </c:forEach>
+	                    </c:if>
+                    </tr>
                 </tbody>
             </table>
         </section>
