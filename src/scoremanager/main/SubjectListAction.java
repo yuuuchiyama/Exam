@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Subject;
 import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
@@ -19,7 +20,7 @@ public class SubjectListAction extends Action {
 		SubjectDao subjectDao = new SubjectDao();
 
         // 学校に関連する科目リストを取得
-        List<bean.Subject> subjects = subjectDao.filter(teacher.getSchool());
+        List<Subject> subjects = subjectDao.filter(teacher.getSchool());
 
         // 科目リストをリクエスト属性にセット
         req.setAttribute("subjects", subjects);

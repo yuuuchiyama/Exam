@@ -25,7 +25,7 @@ public class SubjectUpdateAction extends Action {
 
 		cd = req.getParameter("cd");
 		//DBからデータの取得
-		subject = sDao.get(cd,teacher.getSchool());					// 科目の詳細データを取得
+		subject = sDao.get(cd, teacher.getSchool());					// 科目の詳細データを取得
 
 		// リクエストにデータをセット
 		req.setAttribute("subject", subject);

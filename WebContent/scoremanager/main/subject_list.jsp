@@ -21,33 +21,28 @@
             <div class="my-2 text-end px-4">
                 <a href="SubjectCreate.action">新規登録</a>
             </div>
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>科目コード</th>
-                        <th>科目名</th>
-                        <!-- 変更と削除のヘッダー -->
-                        <c:if test="${not empty subjects}">
-                            <th>変更</th>
-                            <th>削除</th>
-                        </c:if>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- 新規登録した科目 -->
-                    <tr>
-                    	<c:if test="${not empty subjects}">
-	                    <c:forEach var="subject" items="${subjects}">
-	                    <td>${subjects.cd}</td>
-	                    <td>${subjects.name}</td>
-	                    <!-- 変更と削除のリンク -->
-	                    <td><a href="#">変更</a></td>
-	                    <td><a href="#">削除</a></td>
-	                    </c:forEach>
-	                    </c:if>
-                    </tr>
-                </tbody>
-            </table>
+            <c:choose>
+			<c:when test="${subjects.size()>0}">
+				<div>検索結果:${subjects.size()}件</div>
+				<table class="table table-bordered table-hover">
+					<tr>
+						<th>科目コード</th>
+						<th>科目名</th>
+					</tr>
+					<c:forEach var="subjects" items="${subjects}">
+						<tr>
+							<td>${subjects.cd}</td>
+							<td>${subjects.name}</td>
+							<td><a href="SubjectUpdate.action?cd=${subjects.cd}">変更</a></td>
+							<td><a href="SubjectDelete.action?cd=${subjects.cd}">削除</a></td>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:when>
+			<c:otherwise>
+				<div>科目情報が存在しませんでした</div>
+			</c:otherwise>
+			</c:choose>
         </section>
     </c:param>
 </c:import>
