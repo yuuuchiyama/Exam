@@ -21,12 +21,14 @@ public class SubjectUpdateAction extends Action {
 
 		SubjectDao sDao = new SubjectDao();
 
-		String no = "";
+		String cd = "";
 
-		no = req.getParameter("no");
+		cd = req.getParameter("cd");
 		//DBからデータの取得
-		subject = sDao.get(no, null);					// 科目の詳細データを取得
+		subject = sDao.get(cd,teacher.getSchool());					// 科目の詳細データを取得
 
+		// リクエストにデータをセット
+		req.setAttribute("subject", subject);
 
 		//フォワード
 		req.getRequestDispatcher("subject_update.jsp").forward(req, res); // 学生一覧まで画面遷移

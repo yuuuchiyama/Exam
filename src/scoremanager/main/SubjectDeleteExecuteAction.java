@@ -12,7 +12,7 @@ import bean.Teacher;
 import dao.SubjectDao;
 import tool.Action;
 
-public class SubjectUpdateExecuteAction extends Action {
+public class SubjectDeleteExecuteAction extends Action {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -37,10 +37,10 @@ public class SubjectUpdateExecuteAction extends Action {
 		subject.setName(name);
 		subject.setSchool(teacher.getSchool());
 
-		//DBへデータ保存 5
-		sDao.save(subject);	// sqlを実行
+		//DBへデータ削除
+		sDao.delete(subject);	// sqlを実行
 
-		url = "subject_update_done.jsp";
+		url = "subject_delete_done.jsp";
 		req.getRequestDispatcher(url).forward(req, res);
 	}
 
