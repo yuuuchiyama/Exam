@@ -7,7 +7,7 @@
         <section class="me-4">
             <h2 class="bg-secondary bg-opacity-10 py-2">科目情報削除</h2>
             <form action="SubjectDeleteExecute.action?cd=${subject.cd}&name=${subject.name}" method="post">
-                <p>を削除してもよろしいですか</p>
+                <p>｢${subject.name}(${subject.cd})｣を削除してもよろしいですか</p>
                 <div class="text-start"> <!-- 左詰めにするための修正 -->
                     <input type="submit" class="btn btn-danger" value="削除"/>
                 </div>

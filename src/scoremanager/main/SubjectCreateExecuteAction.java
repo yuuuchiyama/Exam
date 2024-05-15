@@ -20,6 +20,8 @@ public class SubjectCreateExecuteAction extends Action {
 		HttpSession session = req.getSession();		// セッションを取得
 		Teacher teacher = (Teacher)session.getAttribute("user");
 
+		Subject test_name = new Subject();
+
 		Subject subject = new Subject();
 
 		SubjectDao sDao = new SubjectDao();
@@ -33,11 +35,13 @@ public class SubjectCreateExecuteAction extends Action {
 		cd = req.getParameter("code");
 		name = req.getParameter("name");
 
+		test_name = sDao.get(cd, teacher.getSchool());
+
 		if (cd.length() != 3) {
 			errors.put("cd_error", "科目コードは3文字で入力してください");
 			req.setAttribute("errors", errors);
 		}else {
-			if (sDao.get(cd, teacher.getSchool()) != null) {
+			if (test_name != null) {
 				errors.put("no_error", "科目コードが重複しています");
 				req.setAttribute("errors", errors);
 			}else {
@@ -53,9 +57,11 @@ public class SubjectCreateExecuteAction extends Action {
 				url = "subject_create_done.jsp";
 				req.getRequestDispatcher(url).forward(req, res);
 			}
-			url = "SubjectCreate.action";
+			url = "subject_create.jsp";
 			req.getRequestDispatcher(url).forward(req, res);
 		}
+		url = "subject_create.jsp";
+		req.getRequestDispatcher(url).forward(req, res);
 	}
 
 }

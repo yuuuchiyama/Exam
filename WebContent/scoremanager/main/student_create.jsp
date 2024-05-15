@@ -41,7 +41,7 @@
 					<option value="0">--------</option>
 					<c:forEach var="num" items="${class_num_set}">
 						<%--現在のnumと選択されていたf2が一致していた場合selectedを追記--%>
-						<option value="${num}" <c:if test="${year==class_num}">selected</c:if>>${num}</option>
+						<option value="${num}" <c:if test="${num==class_num}">selected</c:if>>${num}</option>
 					</c:forEach>
 				</select>
 			</div>
