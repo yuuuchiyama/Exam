@@ -18,6 +18,8 @@
             <div class="me-4">
                 <label class="form-label" for="subject-code">科目コード</label><br>
                 <input class="form-control" id="subject-code" type="text" name="code" placeholder="科目コードを入力してください" required>
+                <div class="mt-2 text-warning">${errors.get("cd_error")}</div>
+            	<div class="mt-2 text-warning">${errors.get("no_error")}</div>
             </div>
             <div class="me-4">
                 <label class="form-label" for="subject-name">科目名</label><br>
