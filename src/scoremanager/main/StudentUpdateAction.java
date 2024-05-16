@@ -22,18 +22,17 @@ public class StudentUpdateAction extends Action{
 
 		String no = req.getParameter("no");
 
-		StudentDao p=new StudentDao();
-		Student a = p.get(no);
+		StudentDao sDao = new StudentDao();
+		Student student = sDao.get(no);
 
 		ClassNumDao cNumDao = new ClassNumDao();// クラス番号Daoを初期化
 		List<String> list = cNumDao.filter(teacher.getSchool());
 
 		// リクエストにデータをセット
-		req.setAttribute("ent_year", a.getEntYear());
-		req.setAttribute("no", a.getNo());
-		req.setAttribute("name", a.getName());
+		req.setAttribute("ent_year", student.getEntYear());
+		req.setAttribute("no", student.getNo());
+		req.setAttribute("name", student.getName());
 		req.setAttribute("num", list);
-		req.setAttribute("fnum", a.getClassNum());
 
 		//JSPへフォワード 7
 		req.getRequestDispatcher("student_update.jsp").forward(req, res);
