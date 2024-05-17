@@ -30,7 +30,7 @@
 			<div class="my-3 me-4">
 				<label class="form-label" for="student-f2-select">クラス</label>
 				<select class="form-select " id="student-f2-select" name="class_num">
-					<c:forEach var="num" items="${class_num_set}">
+					<c:forEach var="num" items="${num}">
 						<%--現在のnumと選択されていたf2が一致していた場合selectedを追記--%>
 						<option value="${num}" <c:if test="${num == class_num}">selected</c:if>>${num}</option>
 					</c:forEach>
@@ -41,8 +41,7 @@
 				<input class="form-check-input" type="checkbox" id="student-check" name="is_attend" checked/>
 			</div>
 			<div class="mb-2">
-				<input class="mt-2 btn btn btn-primary" type="submit"
-				value="変更"/>
+				<input class="mt-2 btn btn btn-primary" type="submit" value="変更"/>
 			</div>
 		</form>
 		<a href="StudentList.action">戻る</a>
