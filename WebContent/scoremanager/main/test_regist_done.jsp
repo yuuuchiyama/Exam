@@ -18,9 +18,9 @@
 
 			<p class="label">登録が完了しました</p>
 
-			<a href="StudentCreate.action">戻る</a>
+			<a href="TestRegist.action">戻る</a>
 
-			<a href="StudentList.action">成績参照</a>
+			<a href="TestList.action">成績参照</a>
 
 		</section>
 

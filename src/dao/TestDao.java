@@ -23,9 +23,9 @@ public class TestDao extends Dao {
 
 		PreparedStatement statement = null;			// プリペアードステートメント
 
-		String where = "where student_no = ? and subject_cd = ? and school_cd = ? and no = ?";
+		String where = " where student_no = ? and subject_cd = ? and school_cd = ? and no = ?";
 
-		String  order = "order by student_no asc";
+		String  order = " order by student_no asc";
 
 		try {
 			// プリペアードステートメントにSQL文をセット
@@ -90,8 +90,8 @@ public class TestDao extends Dao {
 				Test test = new Test();		// Testインスタンスを初期化
 
 				// テストインスタンスに検索結果をセット
-				test.setStudent(sDao.get(rSet.getString("student.no")));
-				test.setclassNum(rSet.getString("student.classNum"));
+				test.setStudent(sDao.get(rSet.getString("test.student_no")));
+				test.setclassNum(rSet.getString("test.class_num"));
 				test.setSubject(subDao.get(rSet.getString("test.subject_cd"), school));
 				test.setSchool(school);
 				test.setNo(rSet.getInt("test.no"));
@@ -116,11 +116,11 @@ public class TestDao extends Dao {
 
 		ResultSet rSet = null;						// リザルトセット
 
-		String join = "join student on student.no = test.student_no";
+		String join = " join student on student.no = test.student_no";
 
-		String where = "where student.ent_year = ? and student.class_num = ? and  test.subject_cd = (select cd from subject where school_cd = ?, name = ?) and test.no = ? and test.school_cd = ?";
+		String where = " where student.ent_year = ? and student.class_num = ? and  test.subject_cd = (select cd from subject where school_cd = ? and name = ?) and test.no = ? and test.school_cd = ?";
 
-		String  order = "order by student_no asc";
+		String  order = " order by student_no asc";
 
 		try {
 			// プリペアードステートメントにSQL文をセット
@@ -213,7 +213,7 @@ public class TestDao extends Dao {
 			if (old == null) {
 				// プリペアードステートメントにINSERT文をセット
 				statement = connection.prepareStatement(
-						"insert into test values (?, ?, ?, ?, ?, ?)");
+						" insert into test values (?, ?, ?, ?, ?, ?)");
 
 				// プリペアードステートメントに値をバインド
 				statement.setString(1, test.getStudent().getNo());
@@ -227,7 +227,7 @@ public class TestDao extends Dao {
 			} else {
 				// プリペアードステートメントにUPDATE文をセット
 				statement = connection.prepareStatement(
-						"update test set point = ? where student_no = ? and subject_cd = ? and school_cd = ? and no = ?");
+						" update test set point = ? where student_no = ? and subject_cd = ? and school_cd = ? and no = ?");
 
 				// プリペアードステートメントに値をバインド
 				statement.setInt(1, test.getPoint());
@@ -307,7 +307,7 @@ public class TestDao extends Dao {
 		try {
 			// テストデータの削除
 			statement = connection.prepareStatement(
-					"delete from test where student_no = ? and subject_cd = ? and school_cd = ? and no = ?");
+					" delete from test where student_no = ? and subject_cd = ? and school_cd = ? and no = ?");
 
 			// プリペアードステートメントに値をバインド
 			statement.setString(1, test.getStudent().getNo());

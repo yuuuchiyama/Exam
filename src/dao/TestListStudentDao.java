@@ -46,11 +46,11 @@ public class TestListStudentDao extends Dao {
 
 		ResultSet rSet = null;							// リザルトセット
 
-		String join = "join test on subject.cd = test.subject_cd";
+		String join = " join test on subject.cd = test.subject_cd";
 
-		String where = "where test.student_no = ?";
+		String where = " where test.student_no = ?";
 
-		String order = "order by test.subject_cd asc";
+		String order = " order by test.subject_cd asc";
 
 		try {
 			// 入力値：学生番号

@@ -17,20 +17,33 @@ public class TestListSubjectDao extends Dao {
 	/** フィルター後のリストへの格納処理を行うメソッド */
 	private List<TestListSubject> postFilter(ResultSet rSet) throws Exception {
 		List<TestListSubject> list = new ArrayList<>();		// リストを初期化
+		int i = 0;
 
 		try {
 			while (rSet.next()) {	// リザルトセットを全権走査
-				TestListSubject listSubject = new TestListSubject();	//科目別成績インスタンスを初期化
+				if (rSet.getInt("test.no") == 2) {
+					System.out.println(rSet.getInt("test.no"));
+					System.out.println(rSet.getInt("test.point"));
+					System.out.println(list.get(i - 1).getPoints());
+					list.get(i - 1).putPoint(rSet.getInt("test.no"), rSet.getInt("test.point"));
+					System.out.println(list.get(i - 1).getPoints());
+				} else {
+					TestListSubject listSubject = new TestListSubject();	//科目別成績インスタンスを初期化
 
-				// 科目別成績インスタンスに結果をセット
-				listSubject.setEntYear(rSet.getInt("student.ent_year"));
-				listSubject.setStudentNo(rSet.getString("test.student_no"));
-				listSubject.setStudentName(rSet.getString("student.name"));
-				listSubject.setClassNum("test.class_num");
-				listSubject.putPoint(rSet.getInt("test.no"), rSet.getInt("test.point"));
+					// 科目別成績インスタンスに結果をセット
+					listSubject.setEntYear(rSet.getInt("student.ent_year"));
+					listSubject.setClassNum(rSet.getString("test.class_num"));
+					listSubject.setStudentNo(rSet.getString("test.student_no"));
+					listSubject.setStudentName(rSet.getString("student.name"));
+					listSubject.putPoint(rSet.getInt("test.no"), rSet.getInt("test.point"));
 
-				// リストに追加
-				list.add(listSubject);
+					// リストに追加
+					// [entYear, studentNo, studentName, classNum, points]
+					list.add(listSubject);
+					System.out.println(list.size());
+				}
+
+				i++;
 			}
 
 		} catch (Exception e) {
@@ -50,24 +63,23 @@ public class TestListSubjectDao extends Dao {
 
 		ResultSet rSet = null;						// リザルトセット
 
-		String joinStu = "join student on test.school_cd = student.school_cd";		// SQLのjoin
+		String join = " join student on student.no = test.student_no";		// SQLのjoin
 
-		String joinSub = "join subject on test.school_cd = subject.school_cd";		// SQLのjoin
+		String where = " where student.ent_year = ? and student.class_num = ? and  test.subject_cd = (select cd from subject where school_cd = ? and name = ?) and test.school_cd = ?";		// SQLの条件式
 
-		String where = "where student.ent_year = ? and student.class_num = ? and subject.name = ? and student.school_cd = ?";		// SQLの条件式
-
-		String order = "order by student.no asc";		// SQLのorder文
+		String order = " order by student.no asc, test.no";		// SQLのorder文
 
 		try {
 			// 画面出力：入学年度(引数)、クラス、学生番号、氏名、回数別の点数(testテーブル)
 
-			statement = connection.prepareStatement(baseSql + joinStu + joinSub + where + order);
+			statement = connection.prepareStatement(baseSql + join + where + order);
 
 			// プリペアードステートメントに値をセット
 			statement.setInt(1, entYear);
 			statement.setString(2, classNum);
-			statement.setString(3, subject.getName());
-			statement.setString(4, school.getCd());
+			statement.setString(3, school.getCd());
+			statement.setString(4, subject.getName());
+			statement.setString(5, school.getCd());
 
 			rSet = statement.executeQuery();	// プリペアードステートメントを実行
 

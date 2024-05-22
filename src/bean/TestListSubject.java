@@ -1,6 +1,7 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 public class TestListSubject implements Serializable {
@@ -29,27 +30,45 @@ public class TestListSubject implements Serializable {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
-	public String classNum() {
+	public String getClassNum() {
 		return classNum;
 	}
 	public void setClassNum(String classNum) {
 		this.classNum = classNum;
 	}
-	public Map<Integer,Integer> getPoint() {
+	public Map<Integer,Integer> getPoints() {
 		return points;
 	}
 	public void setPoints(Map<Integer,Integer> points) {
 		this.points = points;
 	}
 	public String getPoint(int key) {
-		return null;
+		Map<Integer, Integer> points = getPoints();
+		String point = "";
+
+		if (points.get(key) != null) {
+			point = Integer.toString(points.get(key));
+		} else {
+			point = "-";
+		}
+
+
+		return point;
 	}
 	public void putPoint(int key,int value) {
-		points = getPoint();
+		if (key == 1) {
+			Map<Integer, Integer> point = new HashMap<Integer, Integer>();
 
-		points.put(key, value);
+			point.put(key, value);
 
-		setPoints(points);
+			setPoints(point);
+		} else {
+			Map<Integer, Integer> point = getPoints();
+
+			point.put(key, value);
+
+			setPoints(point);
+		}
 	}
 
 
